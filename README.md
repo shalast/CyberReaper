@@ -1,12 +1,12 @@
 <p align="center">
-  <a href="https://discord.gg/cyberspace-ua" target="_blank"><img src="https://img.shields.io/discord/947778619718119434?label=Discord-Online"></a>
+  <a href="https://discord.gg/cyberspace-ua"><img src="https://img.shields.io/discord/947778619718119434?label=Discord-Online"></a>
   <img src="https://img.shields.io/github/last-commit/E-Gideon/CyberReaper">
 </p>
 
 ## Корисні посилання
-<a href="https://discord.gg/cyberspace-ua" target="_blank">Discord</a>
+<a href="https://discord.gg/cyberspace-ua">Discord</a>
 
-<a href="https://t.me/CyberSpace_UA" target="_blank">Telegram</a>
+<a href="https://t.me/CyberSpace_UA">Telegram</a>
 
 ## Опис
 
