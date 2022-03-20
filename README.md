@@ -30,8 +30,7 @@
 2. Виконайте команди у терміналі:
 
     ```docker pull egideon/cyber-reaper```
-    
-    ```docker run egideon/cyber-reaper```
+    ```docker run --rm egideon/cyber-reaper```
     
 ## FAQ
 **Q:** Як додавати цілі?
