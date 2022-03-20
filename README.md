@@ -7,18 +7,23 @@
 </h1>
 
 <p align="center">
-  <a href="https://discord.gg/cyberspace-ua"><img src="https://img.shields.io/discord/947778619718119434?label=Discord-Online"></a>
-  <img src="https://img.shields.io/github/last-commit/E-Gideon/CyberReaper">
+  <a href="https://discord.gg/cyberspace-ua">
+    <img src="https://img.shields.io/discord/947778619718119434?label=Discord Online&style=for-the-badge">
+  </a>
+  <img src="https://img.shields.io/github/last-commit/E-Gideon/CyberReaper?style=for-the-badge">
+  <img src="https://img.shields.io/docker/automated/egideon/cyber-reaper?style=for-the-badge">
+  <img src="https://img.shields.io/docker/image-size/egideon/cyber-reaper/latest?label=Docker Size&style=for-the-badge">
+  <img src="https://img.shields.io/github/repo-size/E-Gideon/CyberReaper?style=for-the-badge">
 </p>
 
 ## Корисні посилання
-[💰Donate](https://cyberspace.diaka.ua/project)
+[💸Donate](https://cyberspace.diaka.ua/project)
 
 [👾Discord](https://discord.gg/cyberspace-ua)
 
 [📟Telegram](https://t.me/CyberSpace_UA)
 
-## Що це:
+## ❓ Що це:
 
 **Скрипт-обгортка для запуску потужного DDoS інструмента [MHDDoS](https://github.com/MHProDev/MHDDoS)**
 
@@ -27,11 +32,11 @@
 - Використовує **різні методи для атаки** і змінює їх в процесі роботи
 - Простий та зрозумілий інтерфейс з іменованими параметрами
 
-**⚠ВИМКНІТЬ VPN⚠** - використовуються проксі, VPN тільки заважатиме!
+**🚨ВИМКНІТЬ VPN🚨** - використовуються проксі, VPN тільки заважатиме!
 
-## 🚀 Швидкий старт:
+  
+## 🚀 Швидкий старт Docker (Рекомендується):
 
-### Docker (Windows, Mac, Ubuntu):
 **Встановіть і запустіть Docker**
 - [Windows](https://docs.docker.com/desktop/windows/install/)
 - [Mac](https://docs.docker.com/desktop/mac/install/)
@@ -43,16 +48,23 @@ docker pull egideon/cyber-reaper
 docker run --rm egideon/cyber-reaper
 ```
 
-## Ручне встановлення (Не рекомендується):
+## 🔩 Ручне встановлення (Не рекомендується):
 **Встановіть наступний софт:**
-- https://git-scm.com/downloads
-- https://www.python.org/downloads/
+- [Git](https://git-scm.com/downloads)
+- [Python 3](https://www.python.org/downloads/)
+
 **Виконайте такі команди:**
 ```
 git clone --recurse-submodules https://github.com/E-Gideon/CyberReaper.git
 cd CyberReaper\src
 py -m pip install -r MHDDoS/requirements.txt
 py main.py
+```
+
+## ⚙️ Оновлення CyberReaper (Docker):
+**Виконайте таку команду:**
+```
+docker pull egideon/cyber-reaper:latest
 ```
 
 ## Вирішення проблем:
@@ -78,11 +90,7 @@ py main.py
 
 ---
 
-## Дисклеймер:
-<h6>
-  <p align="center">
-    ⚠Це програмне забезпечення створене для тестування навантаження WEB ресурсів. Автори не несуть відповідальності за неправомірне використання⚠
-    <br>
-    Все, що роблять користувачі, ми тільки можемо припустити, що це миротворча операція🙂
-  </p>
-</h6>
+## ☢️ Дисклеймер:
+Це програмне забезпечення створене для тестування навантаження WEB ресурсів. Автори не несуть відповідальності за неправомірне використання
+<br>
+Все, що роблять користувачі, ми тільки можемо припустити, що це миротворча операція🙃
