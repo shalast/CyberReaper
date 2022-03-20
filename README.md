@@ -7,9 +7,7 @@
 </h1>
 
 <p align="center">
-  <a href="https://discord.gg/cyberspace-ua">
-    <img src="https://img.shields.io/discord/947778619718119434?label=Discord Online&style=for-the-badge">
-  </a>
+  <img src="https://img.shields.io/discord/947778619718119434?label=Discord Online&style=for-the-badge">
   <img src="https://img.shields.io/github/last-commit/E-Gideon/CyberReaper?style=for-the-badge">
   <img src="https://img.shields.io/docker/automated/egideon/cyber-reaper?style=for-the-badge">
   <img src="https://img.shields.io/docker/image-size/egideon/cyber-reaper/latest?label=Docker Size&style=for-the-badge">
