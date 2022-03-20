@@ -1,4 +1,12 @@
 <p align="center">
+<img src="https://freesvg.org/img/grim-reaper.png" width="300">
+</p>
+
+<h1 align="center">
+Centralized DDOS (Runner) and MHDDoS (50 Methods)
+</h1>
+
+<p align="center">
   <a href="https://discord.gg/cyberspace-ua"><img src="https://img.shields.io/discord/947778619718119434?label=Discord-Online"></a>
   <img src="https://img.shields.io/github/last-commit/E-Gideon/CyberReaper">
 </p>
@@ -42,7 +50,7 @@
 
 2. У консолі з'явилися "трейси" (якась фігня короче 🤔): Це нормально. Інколи це відноситься до нестачі локальних ресурсів, а інколи до успішного "укладення" спати цілі. Система оброблює таки речі, та переходить до наступної цілі.
 
-
+---
 ## FAQ
 **Q:** Як додавати цілі?
 
