@@ -31,7 +31,7 @@
 
     ```docker pull egideon/cyber-reaper```
     
-    ```docker run -it --restart always --rm docker pull egideon/cyber-reaper```
+    ```docker run egideon/cyber-reaper```
     
 ## FAQ
 **Q:** Як додавати цілі?
