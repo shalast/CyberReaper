@@ -1,9 +1,9 @@
 <p align="center">
-<img src="https://freesvg.org/img/grim-reaper.png" width="300">
+  <img src="https://freesvg.org/img/grim-reaper.png" width="300">
 </p>
 
 <h1 align="center">
-Centralized DDOS (Runner) and MHDDoS (50 Methods)
+  Centralized DDOS (Runner) and MHDDoS (50 Methods)
 </h1>
 
 <p align="center">
