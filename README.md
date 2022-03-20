@@ -4,9 +4,11 @@
 </p>
 
 ## Корисні посилання
-<a href="https://discord.gg/cyberspace-ua">Discord</a>
+<a href="https://cyberspace.diaka.ua/project">💰Donate</a>
 
-<a href="https://t.me/CyberSpace_UA">Telegram</a>
+<a href="https://discord.gg/cyberspace-ua">👾Discord</a>
+
+<a href="https://t.me/CyberSpace_UA">📟Telegram</a>
 
 ## Опис
 
