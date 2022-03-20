@@ -138,7 +138,7 @@ if __name__ == '__main__':
                 for conf in json.loads(urlopen(url).read(), object_hook=customDecoder):
                     while int(psutil.cpu_percent()) > 70:
                         logger.critical(
-                            "The CPU loag is to high. Thread waiting...")
+                            "The CPU load is too high. Thread waiting...")
                         logger.info(
                             f"Queue size: {pool.tasks.qsize()}, Next task {conf.Dst}")
 
@@ -155,4 +155,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         logger.info("Shutting down... Ctrl + C")
     except Exception as error:
-        logger.critical(f"OOPS... We are faced with some issue: {error=}")
+        logger.critical(f"OOPS... We faced an issue: {error=}")
