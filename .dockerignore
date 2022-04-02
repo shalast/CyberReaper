@@ -1,0 +1,12 @@
+__pycache__
+src/MHDDoS/files/proxies/*
+src/MHDDoS/.git
+.gitignore
+LICENSE
+README.md
+.github
+.git
+.gitignore
+.gitmodules
+local_install(Linux).sh
+Dockerfile

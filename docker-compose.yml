@@ -1,0 +1,7 @@
+version: '2.0'
+services:
+  cyber-reaper:
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    image: egideon/cyber-reaper
