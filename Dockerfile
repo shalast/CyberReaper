@@ -1,11 +1,23 @@
-FROM python:3
+# For more information, please refer to https://aka.ms/vscode-docker-python
+FROM python:3.8-slim
 
-WORKDIR /client
-COPY src/MHDDoS/requirements.txt /client/MHDDoS/requirements.txt
-RUN pip install -r MHDDoS/requirements.txt
-COPY src/ /client
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE=1
 
-RUN curl -o MHDDoS/config.json https://raw.githubusercontent.com/Aruiem234/mhddosproxy/main/proxies_config.json
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED=1
 
+# Install pip requirements
+COPY requirements.txt .
+RUN python -m pip install -r requirements.txt
 
-CMD [ "python", "./main.py" ]
+WORKDIR /app
+COPY . /app
+
+# Creates a non-root user with an explicit UID and adds permission to access the /app folder
+# For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+USER appuser
+
+# During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
+CMD ["python", "src\main.py"]

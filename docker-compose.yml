@@ -1,7 +1,8 @@
-version: '2.0'
+version: '3.4'
+
 services:
-  cyber-reaper:
-    dns:
-      - 1.1.1.1
-      - 8.8.8.8
-    image: egideon/cyber-reaper
+  cyberreaper:
+    image: cyberreaper
+    build:
+      context: .
+      dockerfile: ./Dockerfile
