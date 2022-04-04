@@ -1,0 +1,26 @@
+image: docker/compose:latest
+
+variables:
+  PROJECT_NAME: bot-${CI_COMMIT_BRANCH}
+  PROJECT_TAG: ${CI_COMMIT_SHA:0:8}
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - start
+  - stop
+
+up:
+  stage: start
+  script:
+    - docker-compose -p ${PROJECT_NAME} down || true
+    - docker-compose -p ${PROJECT_NAME} up -d --remove-orphans
+    - sleep 60
+    - docker-compose -p ${PROJECT_NAME} logs -t --no-color
+    - docker-compose -p ${PROJECT_NAME} ps
+
+down:
+  stage: stop
+  script:
+    - docker-compose -p ${PROJECT_NAME} down --remove-orphans --volumes
+  when: manual
+
